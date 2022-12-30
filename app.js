@@ -3,11 +3,7 @@ const axios = require("axios");
 const redis = require("redis");
 
 const app = express();
-
 const port = 3000;
-
-// make a connection to the local instance of redis
-//const client = redis.createClient(5252);
 
 const client = redis.createClient(6379, "127.0.0.1");
 
@@ -24,17 +20,6 @@ client
     console.error(err);
   });
 
-client.set("key", "value2", (err, reply) => {
-  console.log(err, reply);
-});
-// client
-//   .get("key")
-//   .then((value) => {
-//     console.log(value); // 'value'
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
 
 app.get("/todos/get", async (req, res) => {
   try {
@@ -60,7 +45,7 @@ app.get("/todos/get", async (req, res) => {
      res.status(202).send({ ...JSON.parse(keys),restype:"cache response" });
     }
   } catch (error) {
-    //console.log(error);
+    console.log(error);
   }
 });
 
@@ -98,11 +83,3 @@ app.listen(port, () => {
 });
 
 module.exports = app;
-
-
-// client.exists('key', (err, exists) => {
-//   if (err) throw err;
-//   console.log(exists);
-// });
-
-// client.set('key', 'value', 'EX', 3600);
